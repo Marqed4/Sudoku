@@ -1,0 +1,55 @@
+.sudoku-board {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    border: 2.5px solid #1A1612;
+    width: min(360px, 92vw);
+    height: min(360px, 92vw);
+    background-color: #1A1612;
+    box-shadow:
+        0 4px 6px rgba(26, 22, 18, 0.08),
+        0 12px 40px rgba(26, 22, 18, 0.12);
+}
+
+.sudoku-cell {
+    font-family: "Inter", sans-serif;
+    font-size: clamp(0.8rem, 2.5vw, 1rem);
+    font-weight: 600;
+    color: #1A1612;
+    border: 0.5px solid #C4B99A;
+    aspect-ratio: 1;
+    transition: background-color 0.1s;
+
+    text-align: center;
+    outline: none;
+    cursor: text;
+    caret-color: #9A8C75;
+    padding: 0;
+    width: 100%;
+    box-sizing: border-box;
+    -moz-appearance: textfield;
+}
+
+.cell-clue {
+    color: #1a56a0;
+    cursor: default;
+}
+
+.sudoku-cell:focus {
+    background-color: #E0D9C8;
+}
+
+.cell-orange {
+    background-color: #F5F2EB;
+}
+
+.cell-white {
+    background-color: #EDE8DC;
+}
+
+.border-right {
+    border-right: 2px solid #1A1612;
+}
+
+.border-bottom {
+    border-bottom: 2px solid #1A1612;
+}
