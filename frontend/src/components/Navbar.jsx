@@ -6,7 +6,7 @@ const Navbar = () => {
             <div className="Navbar-links-container">
                 <a href="/" className="home-btn">Home</a>
                 <a href="/How" className="how-btn">How</a>
-                <a href="https://github.com/Marqed4/SolveSudoku" className="made-btn">Made</a>
+                <a href="https://github.com/Marqed4/Sudoku" className="made-btn">Made</a>
             </div>
         </nav>
     )

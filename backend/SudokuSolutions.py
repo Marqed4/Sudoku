@@ -80,3 +80,11 @@ class SudokuSolutions:
         
         return board
     
+    @staticmethod
+    def test_correctness(board: List[List[str]], other_board: List[List[str]]) -> bool:
+        
+        # If any cells are blank, represented by '.' 
+        # user solution is automatically incomplete/wrong.
+        
+        # Comapre solved problem to user input.
+        return board == SudokuSolutions.solve_sudoku(other_board)

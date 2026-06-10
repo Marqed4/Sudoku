@@ -43,8 +43,8 @@ function SudokuScanner({ setBoard }) {
                 onChange={getArrayFromImage}
                 style={{ display: 'none' }}
             />
-            <button className="btn" onClick={() => fileInputRef.current.click()}>Upload</button>
-            <button className="btn" onClick={() => cameraInputRef.current.click()}>Take Photo</button>
+            <button className="btn btn-sys-upload" onClick={() => fileInputRef.current.click()}>Upload Puzzle Image</button>
+            <button className="btn btn-camera-upload" onClick={() => cameraInputRef.current.click()}>Take Photo of Puzzle</button>
         </div>
     )
 }

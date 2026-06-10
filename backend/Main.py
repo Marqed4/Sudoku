@@ -31,7 +31,7 @@ def is_valid_sudoku():
     data = request.get_json()
     if data is None:
         return jsonify({ "error": "No JSON body received" }), 400
-    board = data['board']
+    board = data['originalBoard']
     result = SudokuSolutions.is_valid_sudoku(board)
     return jsonify({ "is_valid": result })
 
@@ -41,7 +41,16 @@ def solve_sudoku():
     data = request.get_json()
     if data is None:
         return jsonify({ "error": "No JSON body received" }), 400
-    board = data['board']
+    
+    board = []
+    
+    # Pass original board when retrieving unadulturated board
+    # Pass localstate/local storage board when retrieving unadulturated board
+    try:
+        board = data['originalBoard']
+    except KeyError:
+        board = data['board']
+        
     result = SudokuSolutions.solve_sudoku(board)
     return jsonify({ "solved_board": result })
 
@@ -58,7 +67,7 @@ def generate_random_sudoku_puzzle():
 # Retrieve default unsolved test sudoku problem.
 @app.route('/api/give_test_puzzle', methods = ['GET'])
 def give_test_puzzle():
-    array = CreateNewBoard.give_test_puzzle
+    array = CreateNewBoard.give_test_puzzle()
     return jsonify({ "array": array })
 
 # Retrieve default solved test sudoku problem.
@@ -67,7 +76,22 @@ def give_solves_test_puzzle():
     array = CreateNewBoard.give_solves_test_puzzle()
     return jsonify({ "array": array })
 
+@app.route('/api/is_board_state_correct', methods = ['POST'])
+def is_board_state_correct():
+    data = request.get_json()
+    if data is None:
+        return jsonify({ "error": "No JSON body received" }), 400
+    solved_board = data['solved_board']
+    current_board = data['board']
+    result = SudokuSolutions.test_correctness(solved_board, current_board )
+    return jsonify({ "result": result })
+
 # <---- Image Scanner ---->
+
+# Important note: Whatever is scanned is added to the board permanently. 
+# If the user doesn't scan the unadulturated problem and what is added 
+# into a cell is ultimately incorrect there is nothing this program can do to solve that.
+# It would just be an unsolvable problem. Hense "Validate" returns unsolvable.
 
 # Turn an image object into an array.
 @app.route('/api/get_array_from_image', methods = ['POST'])

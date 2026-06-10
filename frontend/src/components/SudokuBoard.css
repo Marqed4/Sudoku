@@ -1,5 +1,7 @@
 .sudoku-board {
     display: grid;
+    position: relative;
+    left: -5px;
     grid-template-columns: repeat(9, 1fr);
     border: 2.5px solid #1A1612;
     width: min(360px, 92vw);
@@ -8,6 +10,8 @@
     box-shadow:
         0 4px 6px rgba(26, 22, 18, 0.08),
         0 12px 40px rgba(26, 22, 18, 0.12);
+        /* Margin on top & bottom, left & right*/
+    margin: 25px auto;
 }
 
 .sudoku-cell {
@@ -26,7 +30,6 @@
     padding: 0;
     width: 100%;
     box-sizing: border-box;
-    -moz-appearance: textfield;
 }
 
 .cell-clue {

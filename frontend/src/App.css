@@ -93,6 +93,8 @@ body {
     text-transform: uppercase;
     transition: background-color 0.15s, color 0.15s, transform 0.1s;
     white-space: nowrap;
+    margin-top: 6.7px;
+    margin-bottom: 6.7px;
 }
 
 .btn:hover {
@@ -104,9 +106,26 @@ body {
     transform: scale(0.97);
 }
 
-.btn-primary {
-    background-color: #1A1612;
+/* Generation-New Button */
+.btn-generate {
+    background-color: #C4B99A;
     color: #F5F2EB;
+}
+
+/* Solvable? Button */
+.btn-validate {
+    margin-left: 20px;
+}
+
+/* Manual Solve Button */
+.btn-manual {
+    background-color: #C4B99A;
+    color: #F5F2EB;
+}
+
+/* Automatic Solve Button */
+.btn-automatic {
+    margin-left: 35px;
 }
 
 .btn-primary:hover {
@@ -125,6 +144,8 @@ body {
     color: #F5F2EB;
 }
 
+/* All Badge Stuff */
+
 .status-badge {
     font-size: 0.72rem;
     font-weight: 600;
@@ -132,6 +153,9 @@ body {
     text-transform: uppercase;
     padding: 0.35rem 1rem;
     border-radius: 999px;
+    border: 1.5px solid #1A1612;
+    display: inline-block;
+    margin: 4px;
 }
 
 .status-badge.solvable {
@@ -140,6 +164,16 @@ body {
 }
 
 .status-badge.unsolvable {
+    background-color: #F2D6D6;
+    color: #8B2020;
+}
+
+.status-badge.correct {
+    background-color: #D6EDD6;
+    color: #2D6A2D;
+}
+
+.status-badge.incorrect {
     background-color: #F2D6D6;
     color: #8B2020;
 }
