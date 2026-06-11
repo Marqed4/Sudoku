@@ -78,7 +78,7 @@ function App() {
 // <---- Game Logic ---->
 
     const isValid = async () => {
-        if (!board) return alert("Please upload or generate a puzzle first")
+        if (!originalBoard) return alert("Please upload or generate a puzzle first")
         const response = await fetch('http://localhost:2000/api/is_valid_sudoku', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -92,11 +92,11 @@ function App() {
     // Can be used to take board + adulturations and see if 
     // board is solvable, way to cheat
     const solveSudoku = async () => {
-        if (!board) return alert("Please upload or generate a puzzle first")
+        if (!originalBoard) return alert("Please upload or generate a puzzle first")
         const response = await fetch('http://localhost:2000/api/solve_sudoku', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ board })
+            body: JSON.stringify({ originalBoard })
         })
         const data = await response.json()
         updateBoard(data.solved_board)
@@ -105,7 +105,7 @@ function App() {
     // Duplicated Code
     // Solve the puzzle but don't update the board
     const solveOriginalBoard = async () => {
-        if (!board) return alert("Please upload or generate a puzzle first")
+        if (!originalBoard) return alert("Please upload or generate a puzzle first")
         const response = await fetch('http://localhost:2000/api/solve_sudoku', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
