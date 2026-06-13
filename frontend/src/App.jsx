@@ -10,6 +10,7 @@ import './components/SudokuBoard.css'
 import { useState, useEffect } from 'react'
 
 import './App.css'
+import './DirectionsBoard.css'
 
 const emptyBoard = Array(9).fill(null).map(() => Array(9).fill('.'))
 
@@ -39,12 +40,12 @@ function StatusBadge({ result1, result2, onResult1Expire, onResult2Expire}) {
     return (
         <>
             {result1 !== null && (
-                <div className={`status-badge ${result1 ? 'solvable' : 'unsolvable'}`}>
+                <div className={`status-badge validity ${result1 ? 'solvable' : 'unsolvable'}`}>
                     {result1 ? 'Unadulterated board is solvable' : 'Unadulterated board unsolvable'}
                 </div>
             )}
             {result2 !== null && (
-                <div className={`status-badge ${result2 ? 'correct' : 'incorrect'}`}>
+                <div className={`status-badge validity ${result2 ? 'correct' : 'incorrect'}`}>
                     {result2 ? 'Board Solution Is Correct' : 'Board Solution Is Incorrect'}
                 </div>
             )}
@@ -188,41 +189,66 @@ function App() {
     // http://localhost:2000/api/give_solves_test_puzzle
 
     return (
-    <>
-        <Navbar/>
-        <div className="app-container">
-            <h1 className="app-title">SUDOKU</h1>
+        <>
+            {/* <Navbar/> */}
+            <div className="app-container">
+                <h1 className="app-title">SUDOKU</h1>
 
-            <div className="board-layout">
-                {/* Upload / camera buttons on the left */}
-                <div className="side-panel side-left">
-                    <SudokuScanner setBoard={loadPuzzle} />
+                {/* Upload / camera buttons above the board */}
+                <SudokuScanner setBoard={loadPuzzle} />
+
+                <div className="board-layout">
+
+                    {/* Left - how to play */}
+                    <div className="wrd directions-board">
+                        <h2><u>how to play</u></h2>
+                        <div className="divider" />
+                        <p>Upload or take a photo of your Sudoku puzzle.</p>
+                        <p>The board will populate automatically.</p>
+                        <p>Use the buttons below to solve, test, validate, or generate a new puzzle.</p>
+                    </div>
+
+                    {/* Center - the board */}
+                    <SudokuBoard board={board ?? emptyBoard} clues={clues} onCellChange={updateCell} />
+
+                    {/* Right - tips & tricks */}
+                    <div className="wrd recommendations-board">
+                        <h2><u>tips & tricks</u></h2>
+                        <div className="divider" />
+                        <p>Start with rows, columns, or boxes that have the most clues.</p>
+                        <p>If a number can only go in one cell in a row, it must go there.</p>
+                        <p>Eliminate candidates by scanning each row, column, and 3×3 box.</p>
+                    </div>
+
                 </div>
-
-                <SudokuBoard board={board ?? emptyBoard} clues={clues} onCellChange={updateCell} />
 
                 {/* Generate, Ask Solve, Manual Solution, Auto Solve */}
-                <div className="side-panel side-right">
-                    <button className="btn btn-generate" onClick={generateSudoku}>Generate New Puzzle</button>
-                    <button className="btn btn-validate" onClick={isValid}>Can Be Solved?</button>
+                <div className="board-actions">
+                    <div className="side-panel side-left">
+                        {/* Generate New Puzzles */}
+                        <button className="btn btn-generate" onClick={generateSudoku}>Generate New Puzzle</button>
+                        {/* Tests if board can be solved */}
+                        <button className="btn btn-validate" onClick={isValid}>Can Be Solved?</button>
+                    </div>
+                    <div className="side-panel side-right">
+                        {/* Tests if user input is correct */}
+                        <button className="btn btn-manual" onClick={testBoardCorrect}>Test My Solution</button>
+                        {/* Once solved, empty/wrong cells are filled in place */}
+                        <button className="btn btn-automatic" onClick={solveSudoku}>Solve For Me</button>
+                    </div>
                 </div>
-                <div>
-                    {/* Tests if user input is correct */}
-                    <button className="btn btn-manual" onClick={testBoardCorrect}>Test My Solution</button>
-                    {/* Once solved, empty/wrong cells are filled in place */}
-                    <button className="btn btn-automatic" onClick={solveSudoku}>Solve For Me</button>
-                    <h2>
-                        <StatusBadge 
-                            result1={canBeSolved}
-                            result2={correctSolution}
-                            onResult1Expire={() => setCanBeSolved(null)}
-                            onResult2Expire={() => setCorrectSolution(null)}
-                        />
+                <div className="status-row">
+                    <h2 className="status-badge">
+                    <StatusBadge 
+                    result1={canBeSolved}
+                    result2={correctSolution}
+                    onResult1Expire={() => setCanBeSolved(null)}
+                    onResult2Expire={() => setCorrectSolution(null)}
+                    />
                     </h2>
                 </div>
             </div>
-        </div>
-    </>
+        </>
     )
 }
 

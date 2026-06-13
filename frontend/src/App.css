@@ -19,6 +19,13 @@
     font-style: italic;
 }
 
+.board-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
 *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
@@ -29,7 +36,7 @@ body {
     background-color: #F5F2EB;
     background-image:
         radial-gradient(ellipse at 20% 10%, rgba(180, 160, 120, 0.12) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 90%, rgba(140, 120, 90, 0.10) 0%, transparent 60%);
+        radial-gradient(ellipse at 80% 90%, rgba(59, 36, 0, 0.1) 0%, transparent 60%);
     min-height: 100vh;
 }
 
@@ -61,6 +68,14 @@ body {
     font-weight: 600;
     color: #1A1612;
     letter-spacing: 0.15em;
+}
+
+.board-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+    margin-top: -2rem;
 }
 
 .app-actions {
@@ -95,6 +110,7 @@ body {
     white-space: nowrap;
     margin-top: 6.7px;
     margin-bottom: 6.7px;
+    display: flex;
 }
 
 .btn:hover {
@@ -128,23 +144,16 @@ body {
     margin-left: 35px;
 }
 
-.btn-primary:hover {
-    background-color: #3D3529;
-    border-color: #3D3529;
-}
-
-.btn-ghost {
-    border-color: #C4B99A;
-    color: #9A8C75;
-}
-
-.btn-ghost:hover {
-    background-color: #1A1612;
-    border-color: #1A1612;
-    color: #F5F2EB;
-}
-
 /* All Badge Stuff */
+
+.status-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  margin-top: 8px;
+}
 
 .status-badge {
     font-size: 0.72rem;
@@ -152,10 +161,14 @@ body {
     letter-spacing: 0.12em;
     text-transform: uppercase;
     padding: 0.35rem 1rem;
-    border-radius: 999px;
-    border: 1.5px solid #1A1612;
-    display: inline-block;
     margin: 4px;
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+}
+
+.validity {
+    border: 1.5px solid #1A1612;
 }
 
 .status-badge.solvable {
