@@ -10,7 +10,7 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: { 
     origin: [
-      'https://solvesudoku.marqed.it',
+      'https://sudoku.marqed.it',
       'https://sudoku-production.up.railway.app',
       'http://localhost:2001'
     ],
@@ -19,6 +19,6 @@ const io = new Server(httpServer, {
 });
 
 const PORT = 2002
-server.listen(PORT, () => {
+httpServer.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 })

@@ -135,7 +135,7 @@ function App() {
     // <---- New Game ---->
 
     const generateSudoku = async () => {
-        const response = await fetch(`${import.meta.env.VITE_API_URL}api/generate_random_sudoku_puzzle`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/generate_random_sudoku_puzzle`, {
             method: 'GET'
         })
         const data = await response.json()
