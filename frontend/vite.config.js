@@ -3,6 +3,9 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
     plugins: [react()],
+    preview: {
+        allowedHosts: ['sudoku.marqed.it', 'sudoku-production-7f4b.up.railway.app'],
+    },
     server: {
         port: 2001,
         proxy: {
