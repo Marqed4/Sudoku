@@ -80,7 +80,7 @@ function App() {
 
     const isValid = async () => {
         if (!originalBoard) return alert("Please upload or generate a puzzle first")
-        const response = await fetch('http://localhost:2000/api/is_valid_sudoku', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/is_valid_sudoku`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ originalBoard })
@@ -94,7 +94,7 @@ function App() {
     // board is solvable, way to cheat
     const solveSudoku = async () => {
         if (!originalBoard) return alert("Please upload or generate a puzzle first")
-        const response = await fetch('http://localhost:2000/api/solve_sudoku', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/solve_sudoku`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ originalBoard })
@@ -107,7 +107,7 @@ function App() {
     // Solve the puzzle but don't update the board
     const solveOriginalBoard = async () => {
         if (!originalBoard) return alert("Please upload or generate a puzzle first")
-        const response = await fetch('http://localhost:2000/api/solve_sudoku', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/solve_sudoku`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ originalBoard })
@@ -121,7 +121,7 @@ function App() {
         const solved_board = await solveOriginalBoard()
         console.log(solved_board)
         console.log(board)
-        const response = await fetch('http://localhost:2000/api/is_board_state_correct', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/is_board_state_correct`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ solved_board, board })
@@ -135,7 +135,7 @@ function App() {
     // <---- New Game ---->
 
     const generateSudoku = async () => {
-        const response = await fetch('http://localhost:2000/api/generate_random_sudoku_puzzle', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}api/generate_random_sudoku_puzzle`, {
             method: 'GET'
         })
         const data = await response.json()
