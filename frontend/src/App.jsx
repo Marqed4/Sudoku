@@ -256,10 +256,10 @@ function App() {
                         <p>Use the buttons below to solve, test, validate, or generate a new puzzle.</p>
                     </div>
 
-                    {/* left - center hint button/selector */}
+                    {/* left - center hint button/selector w/ numerical dropdown choices */}
                     <div>
                         <button className="btn btn-hint" onClick={getHint}>Get Hint💡</button>
-                        <select id="number-select" value={hints} onChange={(e) => setHints(Number(e.target.value))}>How many hints?
+                        <select id="number-select" className="slct btn-number-select" value={hints} onChange={(e) => setHints(Number(e.target.value))}>How many hints?
                             <option value="1" data-hint="1">Hints: 1</option>
                             <option value="2" data-hint="2">Hints: 2</option>
                             <option value="3" data-hint="3">Hints: 3</option>

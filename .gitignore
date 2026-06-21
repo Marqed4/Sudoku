@@ -24,6 +24,9 @@ dist-ssr
 *.sw?
 *.env
 
+# pycache
+__pycache__
+
 # Test Cases
 backend/HintsTest.py
 backend/ImageToArrayTest.py
