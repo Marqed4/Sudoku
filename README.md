@@ -46,6 +46,7 @@ __Error Checking__ - Optional real‑time validation to catch duplicates and imp
 ---
 
 <h2 align="center">Architecture</h2>
+<h2 align="center">Class Diagram</h2>
 
 <p align="center"><img src="Examples/Screenshot%202026-06-21%20034200.png" /></p>
 
