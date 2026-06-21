@@ -37,6 +37,11 @@
     cursor: default;
 }
 
+.cell-hint {
+  color: red;
+  font-weight: bold;
+}
+
 .sudoku-cell:focus {
     background-color: #E0D9C8;
 }

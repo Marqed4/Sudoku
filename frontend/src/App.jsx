@@ -1,6 +1,3 @@
-import Navbar from './components/Navbar'
-import './components/Navbar.css'
-
 import SudokuScanner from './components/SudokuScanner'
 import './components/SudokuScanner.css'
 
@@ -12,9 +9,24 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import './DirectionsBoard.css'
 
+// < ---- Display ---->
 const emptyBoard = Array(9).fill(null).map(() => Array(9).fill('.'))
 
-// < ---- Display ---->
+// Safely read and parse a value 
+// from localStorage, clearing it if corrupted
+function loadFromStorage(key) {
+    const saved = localStorage.getItem(key)
+    if (!saved || saved === 'undefined') {
+        return null
+    }
+
+    try {
+        return JSON.parse(saved)
+    } catch (error) {
+        localStorage.removeItem(key)
+        return null
+    }
+}
 
 function StatusBadge({ result1, result2, onResult1Expire, onResult2Expire}) {
     console.log('result1:', result1, 'result2:', result2)
@@ -28,7 +40,7 @@ function StatusBadge({ result1, result2, onResult1Expire, onResult2Expire}) {
         }
     }, [result1])
 
-        useEffect(() => {
+    useEffect(() => {
         if (result2 !== null) {
             const timer = setTimeout(() => {
                 onResult2Expire()
@@ -57,24 +69,14 @@ function StatusBadge({ result1, result2, onResult1Expire, onResult2Expire}) {
 
 function App() {
 
-    const [board, setBoard] = useState(() => {
-        const saved = localStorage.getItem('sudoku-board')
-        return saved ? JSON.parse(saved) : null
-    })
-
-    const [originalBoard, setOriginalBoardState] = useState(() => {
-        const saved = localStorage.getItem('original-sudoku-board')
-        return saved ? JSON.parse(saved) : null
-    })
-
-    const [clues, setClues] = useState(() => {
-        const saved = localStorage.getItem('sudoku-clues')
-        return saved ? JSON.parse(saved) : null
-    })
+    const [board, setBoard] = useState(() => loadFromStorage('sudoku-board'))
+    const [originalBoard, setOriginalBoardState] = useState(() => loadFromStorage('original-sudoku-board'))
+    const [clues, setClues] = useState(() => loadFromStorage('sudoku-clues'))
+    const [hintCells, setHintCells] = useState(() => loadFromStorage('sudoku-hint-cells'))
 
     const [canBeSolved, setCanBeSolved] = useState(null)
-
     const [correctSolution, setCorrectSolution] = useState(null)
+    const [hints, setHints] = useState(1)
     
 // <---- Game Logic ---->
 
@@ -114,6 +116,51 @@ function App() {
         })
         const data = await response.json()
         return data.solved_board
+    }
+
+    // How do you pass the orginal board and an integer value
+    const getHint = async () => {
+    if (!originalBoard) return alert("Please upload or generate a puzzle first")
+
+        console.table(board)
+        console.log(hints)
+
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/api/get_hint`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json' },
+            body: JSON.stringify({ board, hints })
+        })
+        const data = await response.json()
+        console.table(data.board)
+        updateBoard(data.board)
+
+        // Build a 9x9 boolean grid from the list of (row, col, value) hint tuples
+        const newHintCells = Array(9).fill(null).map(() => Array(9).fill(false))
+        data.hint_locations.forEach(([row, col, value]) => {
+            newHintCells[row][col] = true
+        })
+        
+        let savedHintCells = JSON.parse(localStorage.getItem('sudoku-hint-cells'));
+        
+        // User never used hints for this puzzle, build blank matrix.
+        if (!savedHintCells) {
+            savedHintCells = Array.from({ length: 9 }, () => Array(9).fill(false))
+        }
+
+        // Merge the array of old hints w/ new hints.
+        for (let i = 0; i < 9; i++){
+            for (let o = 0; o < 9; o++){
+                if (newHintCells[i][o] === true){
+                    savedHintCells[i][o] = true;
+                }
+            }
+        }
+
+        console.table(savedHintCells) // Used to print matrix
+        localStorage.setItem('sudoku-hint-cells', JSON.stringify(savedHintCells))
+
+        // Apply to puzzle board.
+        setHintCells(savedHintCells)
     }
 
     // Return solved board state & original board state (clues - board)
@@ -179,6 +226,8 @@ function App() {
         ))
         setOriginalBoard(newBoard)
         setCanBeSolved(null)
+        setHintCells(null)
+        localStorage.removeItem('sudoku-hint-cells')
     }
 
     // Save your work as an image!
@@ -190,7 +239,6 @@ function App() {
 
     return (
         <>
-            {/* <Navbar/> */}
             <div className="app-container">
                 <h1 className="app-title">SUDOKU</h1>
 
@@ -201,25 +249,36 @@ function App() {
 
                     {/* Left - how to play */}
                     <div className="wrd directions-board">
-                        <h2><u>how to play</u></h2>
+                        <h2><u>How 2 Play</u>❓</h2>
                         <div className="divider" />
                         <p>Upload or take a photo of your Sudoku puzzle.</p>
                         <p>The board will populate automatically.</p>
                         <p>Use the buttons below to solve, test, validate, or generate a new puzzle.</p>
                     </div>
 
+                    {/* left - center hint button/selector */}
+                    <div>
+                        <button className="btn btn-hint" onClick={getHint}>Get Hint💡</button>
+                        <select id="number-select" value={hints} onChange={(e) => setHints(Number(e.target.value))}>How many hints?
+                            <option value="1" data-hint="1">Hints: 1</option>
+                            <option value="2" data-hint="2">Hints: 2</option>
+                            <option value="3" data-hint="3">Hints: 3</option>
+                            <option value="4" data-hint="4">Hints: 4</option>
+                            <option value="5" data-hint="5">Hints: 5</option>
+                        </select>
+                    </div>
+
                     {/* Center - the board */}
-                    <SudokuBoard board={board ?? emptyBoard} clues={clues} onCellChange={updateCell} />
+                    <SudokuBoard board={board ?? emptyBoard} clues={clues} hintCells={hintCells} onCellChange={updateCell} />
 
                     {/* Right - tips & tricks */}
                     <div className="wrd recommendations-board">
-                        <h2><u>tips & tricks</u></h2>
+                        <h2><u>Tips & Tricks</u>🫡</h2>
                         <div className="divider" />
                         <p>Start with rows, columns, or boxes that have the most clues.</p>
                         <p>If a number can only go in one cell in a row, it must go there.</p>
                         <p>Eliminate candidates by scanning each row, column, and 3×3 box.</p>
                     </div>
-
                 </div>
 
                 {/* Generate, Ask Solve, Manual Solution, Auto Solve */}

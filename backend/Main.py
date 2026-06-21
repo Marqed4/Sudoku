@@ -5,6 +5,7 @@ import traceback
 import json
 import os
 from SudokuSolutions import SudokuSolutions
+from Hints import Hints
 from CreateNewBoard import CreateNewBoard, SudokuGenerator
 from ImageToArray import ImageToArray
 
@@ -55,6 +56,29 @@ def solve_sudoku():
         
     result = SudokuSolutions.solve_sudoku(board)
     return jsonify({ "solved_board": result })
+
+@app.route('/api/get_hint', methods = ['POST'])
+def get_hint():
+    data = request.get_json()
+    if data is None:
+        return jsonify({ "error": "No JSON body received" }), 400
+    
+    board = []
+    how_many_hints = data.get('hints', 1)
+    
+    # Pass original board when retrieving unadulturated board
+    # Pass localstate/local storage board when retrieving unadulturated board
+    try:
+        board = data['originalBoard']
+    except KeyError:
+        board = data['board']
+        
+    if not SudokuSolutions.is_valid_sudoku(board):
+        return jsonify({ "error": "The current board is not solvable" }), 400
+    
+    # result stores the tujple that is the result of calling get_hint.
+    result = Hints.get_hint(board, how_many_hints)
+    return jsonify({ "board" : result[0], "hint_locations": result[1]})
 
 # <---- New Game ---->
 

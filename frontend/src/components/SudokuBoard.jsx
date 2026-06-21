@@ -1,4 +1,4 @@
-function SudokuBoard({ board, clues, onCellChange }) {
+function SudokuBoard({ board, clues, hintCells, onCellChange }) {
 
     if (!board) return null
 
@@ -10,6 +10,7 @@ function SudokuBoard({ board, clues, onCellChange }) {
                     const boxCol = Math.floor(colIndex / 3)
                     const isOrange = (boxRow + boxCol) % 2 === 0
                     const isClue = clues?.[rowIndex]?.[colIndex] ?? false
+                    const isHint = hintCells?.[rowIndex]?.[colIndex] ?? false
 
                     return (
                         <input
@@ -19,12 +20,13 @@ function SudokuBoard({ board, clues, onCellChange }) {
                                 ${colIndex % 3 === 2 && colIndex !== 8 ? 'border-right' : ''}
                                 ${rowIndex % 3 === 2 && rowIndex !== 8 ? 'border-bottom' : ''}
                                 ${isClue ? 'cell-clue' : ''}
+                                ${isHint ? 'cell-hint' : ''}
                             `}
                             type="text"
                             inputMode="numeric"
                             maxLength={1}
                             value={cell === '.' ? '' : cell}
-                            readOnly={isClue}
+                            readOnly={isClue || isHint}
                             onChange={(e) => {
                                 const val = e.target.value
 
