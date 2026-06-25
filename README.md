@@ -8,30 +8,47 @@
   <p>A full‑stack Sudoku solver, scanner, and generator</p>
 
   <p>
-    <a href="https://marqed.it/SolveSudoku">🌐 Visit us & learn more</a>  
-    <a href="https://sudoku.marqed.it/">🎮 Play @</a>
+    <a href="https://marqed.it/Sudoku">🌐 Visit us & learn more</a>  
+  </p>
+  <p>
+    <a href="https://sudoku.marqed.it/">🎮 Play</a>
   </p>
   <br/>
 </div>
 <div align="center">
-  Snap a photo, get a board, get stuck, get a hint.
+  Upload a puzzle or perhaps generate one. If you're stuck get some hints or have us solve the puzzle entirely. Test your solution or check if the puzzle could be solved all along.
 </div>
 
 ---
 
 <h2 align="center">Views</h2>
 
-<p align="center"><img src="Screenshot%202026-06-21%20092112.png" /></p>
+<p align="center"><img src="Examples/Screenshot%202026-06-21%20092112.png" /></p>
 
 ---
 
 <h2 align="center">Features</h2>
 
+__Instant Board Scanner__ - Snap a photo of any Sudoku puzzle and convert it into a clean, playable 9×9 grid using computer vision.
+
+__Smart Solver__ - Get a full solution instantly, powered by a backtracking + constraint‑driven algorithm.
+
+__Hint Engine__ - Stuck on a puzzle? Request one or multiple hints, generated from the solved board and applied directly to your grid.
+
+__Puzzle Generator__ - Create fresh Sudoku boards on demand, and guaranteed solvability.
+
+__Board Editor__ - Manually tweak cells, fix mistakes.
+
+__Progress Persistence__ - Your board, hints, and state are saved automatically in local storage.
+
+__Error Checking__ - Optional real‑time validation to catch duplicates and impossible moves.
+
 ---
 
 <h2 align="center">Architecture</h2>
+<h2 align="center">Class Diagram</h2>
 
-<p align="center"><img src="Screenshot%202026-06-21%20034200.png" /></p>
+<p align="center"><img src="Examples/Screenshot%202026-06-21%20034200.png" /></p>
 
 <!-- TODO: full system architecture diagram goes here -->
 
@@ -45,8 +62,8 @@ SolveSudoku takes zero liability for puzzles you could've solved yourself.
 
 <h2 align="center">Contributing</h2>
 
-- If you're considering contributing to SolveSudoku, first of all, thank you!
-- Check the [Contribution Guidelines](CONTRIBUTING.md) before getting started.
+If you're considering contributing to __Sudoku__, first of all, __thank you!__
+Check the [Contribution Guidelines](CONTRIBUTING.md) before getting started.
 
 ---
 
