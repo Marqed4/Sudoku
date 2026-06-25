@@ -33,7 +33,7 @@ class CreateNewBoard:
         
 class SudokuGenerator:
     @staticmethod
-    def generate_sudoku(empty_cells=40):
+    def generate_sudoku(empty_cells = 40):
         grid = [[0] * 9 for _ in range(9)]
         SudokuGenerator._fill(grid)
         SudokuGenerator._remove_cells(grid, empty_cells)
