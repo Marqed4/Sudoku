@@ -31,17 +31,17 @@
 
 __Instant Board Scanner__ - Snap a photo of any Sudoku puzzle and convert it into a clean, playable 9×9 grid using computer vision.
 
-__Smart Solver__ - Get a full solution instantly, powered by a backtracking + constraint‑driven algorithm.
+__Smart Solver__ - Get a full solution instantly, powered by a backtracking + constraint-driven algorithm.
 
 __Hint Engine__ - Stuck on a puzzle? Request one or multiple hints, generated from the solved board and applied directly to your grid.
 
-__Puzzle Generator__ - Create fresh Sudoku boards on demand, and guaranteed solvability.
+__Puzzle Generator__ - Create fresh Sudoku boards on demand, with guaranteed solvability.
 
 __Board Editor__ - Manually tweak cells, fix mistakes.
 
 __Progress Persistence__ - Your board, hints, and state are saved automatically in local storage.
 
-__Error Checking__ - Optional real‑time validation to catch duplicates and impossible moves.
+__Error Checking__ - Optional real-time validation to catch duplicates and impossible moves.
 
 ---
 
@@ -51,6 +51,19 @@ __Error Checking__ - Optional real‑time validation to catch duplicates and imp
 <p align="center"><img src="Examples/Screenshot%202026-06-21%20034200.png" /></p>
 
 <!-- TODO: full system architecture diagram goes here -->
+
+---
+
+<h2 align="center">Deployment</h2>
+
+The app is split across two services hosted on [Render](https://render.com):
+
+| Service | Runtime | Host |
+|---|---|---|
+| Sudoku Frontend | Static Site (Vite build) | Global CDN |
+| Sudoku Backend | Python / Flask + Gunicorn | Virginia |
+
+The frontend is served as a static site via Render's global CDN. The backend runs as a persistent web service, handling API requests for puzzle generation, solving, hints, and image processing.
 
 ---
 

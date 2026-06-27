@@ -16,7 +16,7 @@ from ImageToArray import ImageToArray
 app = Flask(__name__, static_folder = '../frontend/dist', static_url_path='')
 CORS(app, origins=["http://localhost:2001",
                     "https://sudoku.marqed.it",
-                    "https://sudoku-euyaprc1b-marqed-s-stuff.vercel.app/"]) 
+                    "https://sudoku-7qqp.onrender.com"])
 
 @app.route('/')
 def serve():
