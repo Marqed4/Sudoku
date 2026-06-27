@@ -8,10 +8,10 @@
   <p>A full‑stack Sudoku solver, scanner, and generator</p>
 
   <p>
-    <a href="https://marqed.it/Sudoku">🌐 Visit us & learn more</a>  
+    🌐 <a href="https://marqed.it/Sudoku">Visit us & learn more</a>  
   </p>
   <p>
-    <a href="https://sudoku.marqed.it/">🎮 Play</a>
+    🎮 <a href="https://sudoku.marqed.it/">Play</a>
   </p>
   <br/>
 </div>
