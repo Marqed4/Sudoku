@@ -55,6 +55,7 @@ __Error Checking__ - Optional real-time validation to catch duplicates and impos
 ---
 
 <h2 align="center">Deployment</h2>
+<p align="center"><img src="Examples/Screenshot%202026-06-27%20040541.png" /></p>
 
 The app is split across two services hosted on [Render](https://render.com):
 
