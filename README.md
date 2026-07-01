@@ -66,6 +66,8 @@ The app is split across two services hosted on [Render](https://render.com):
 
 The frontend is served as a static site via Render's global CDN. The backend runs as a persistent web service, handling API requests for puzzle generation, solving, hints, and image processing.
 
+**Note:** The backend runs on Render's free tier, which spins down after periods of inactivity. If the service has been idle, the first request (puzzle generation, solving, hints, or scanning) can take 50+ seconds while it spins back up. Please be patient, subsequent requests will be fast.
+
 ---
 
 <h2 align="center">Ethics</h2>
