@@ -1,4 +1,4 @@
-import BackendExplanationImage from '../src/assets/backgrounds/Gash_Darnit_Backends_Down_Statics_Up.png'
+import BackendExplanationImage from '../src/assets/backgrounds/Backend Warning.png'
 
 import SudokuScanner from './components/SudokuScanner'
 import './components/SudokuScanner.css'
