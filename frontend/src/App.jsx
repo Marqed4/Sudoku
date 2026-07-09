@@ -1,10 +1,12 @@
+import BackendExplanationImage from '../src/assets/backgrounds/Gash_Darnit_Backends_Down_Statics_Up.png'
+
 import SudokuScanner from './components/SudokuScanner'
 import './components/SudokuScanner.css'
 
 import SudokuBoard from './components/SudokuBoard'
 import './components/SudokuBoard.css'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, React } from 'react'
 
 import './App.css'
 import './DirectionsBoard.css'
@@ -20,6 +22,8 @@ function loadFromStorage(key) {
         return null
     }
 
+    // Return JSON if data is mangled,
+    // just return null...
     try {
         return JSON.parse(saved)
     } catch (error) {
@@ -67,8 +71,18 @@ function StatusBadge({ result1, result2, onResult1Expire, onResult2Expire}) {
     return null
 }
 
-function App() {
+// < ---- User Help Functions ---->
 
+function HoverReveal({ img, hovered, onMouseEnter, onMouseLeave }) {
+    return (
+        <>
+            {hovered && <img src={img} className="explanation-img" />}
+        </>
+    );
+}
+
+function App() {
+    
     const [board, setBoard] = useState(() => loadFromStorage('sudoku-board'))
     const [originalBoard, setOriginalBoardState] = useState(() => loadFromStorage('original-sudoku-board'))
     const [clues, setClues] = useState(() => loadFromStorage('sudoku-clues'))
@@ -77,8 +91,10 @@ function App() {
     const [canBeSolved, setCanBeSolved] = useState(null)
     const [correctSolution, setCorrectSolution] = useState(null)
     const [hints, setHints] = useState(1)
+
+    const [NetworkingHelpHover, setNetworkingHelpHover] = useState(false);
     
-// <---- Game Logic ---->
+    // <---- Game Logic ---->
 
     const isValid = async () => {
         if (!originalBoard) return alert("Please upload or generate a puzzle first")
@@ -229,7 +245,7 @@ function App() {
         setHintCells(null)
         localStorage.removeItem('sudoku-hint-cells')
     }
-
+    
     // Save your work as an image!
     // print(data.is_valid)
 
@@ -239,6 +255,19 @@ function App() {
 
     return (
         <>
+            <div className='warning-container'>
+                <div className='btn-experiencing-issue'
+                    onMouseEnter={() => setNetworkingHelpHover(true)}
+                    onMouseLeave={() => setNetworkingHelpHover(false)}>
+                    ⚠️ Experiencing Issues?
+                </div>
+
+                <HoverReveal
+                    hovered={NetworkingHelpHover}
+                    img={BackendExplanationImage}
+                />
+            </div>
+
             <div className="app-container">
                 <h1 className="app-title">SUDOKU</h1>
 
@@ -256,18 +285,6 @@ function App() {
                         <p>Use the buttons below to solve, test, validate, or generate a new puzzle.</p>
                     </div>
 
-                    {/* left - center hint button/selector w/ numerical dropdown choices */}
-                    <div>
-                        <button className="btn btn-hint" onClick={getHint}>Get Hint💡</button>
-                        <select id="number-select" className="slct btn-number-select" value={hints} onChange={(e) => setHints(Number(e.target.value))}>How many hints?
-                            <option value="1" data-hint="1">Hints: 1</option>
-                            <option value="2" data-hint="2">Hints: 2</option>
-                            <option value="3" data-hint="3">Hints: 3</option>
-                            <option value="4" data-hint="4">Hints: 4</option>
-                            <option value="5" data-hint="5">Hints: 5</option>
-                        </select>
-                    </div>
-
                     {/* Center - the board */}
                     <SudokuBoard board={board ?? emptyBoard} clues={clues} hintCells={hintCells} onCellChange={updateCell} />
 
@@ -283,6 +300,19 @@ function App() {
 
                 {/* Generate, Ask Solve, Manual Solution, Auto Solve */}
                 <div className="board-actions">
+
+                    {/* left - center hint button/selector w/ numerical dropdown choices */}
+                    <div>
+                        <button className="btn btn-hint" onClick={getHint}>Get Hint💡</button>
+                        <select id="number-select" className="slct btn-number-select" value={hints} onChange={(e) => setHints(Number(e.target.value))}>How many hints?
+                            <option value="1" data-hint="1">Hints: 1</option>
+                            <option value="2" data-hint="2">Hints: 2</option>
+                            <option value="3" data-hint="3">Hints: 3</option>
+                            <option value="4" data-hint="4">Hints: 4</option>
+                            <option value="5" data-hint="5">Hints: 5</option>
+                        </select>
+                    </div>
+
                     <div className="side-panel side-left">
                         {/* Generate New Puzzles */}
                         <button className="btn btn-generate" onClick={generateSudoku}>Generate New Puzzle</button>
